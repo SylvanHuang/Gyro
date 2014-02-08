@@ -11,6 +11,7 @@ package edu.wpi.first.wpilibj.templates;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,6 +26,8 @@ public class RobotTemplate extends IterativeRobot {
     Gyro gyro = new Gyro(1);
     double leftDrive = 0;
     double rightDrive = 0;
+    LRDrive lrdrive = new LRDrive();
+    RobotDrive drive = new RobotDrive(5, 4, 7, 8);
     
     
     /**
@@ -32,6 +35,9 @@ public class RobotTemplate extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+         
 
     }
 
@@ -46,8 +52,8 @@ public class RobotTemplate extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        leftDrive = LRDrive.le
-        
+        LRDrive.Pair pair = lrdrive.straightDrive(leftStick.getY(), rightStick.getY(), gyro.getAngle(), 0);
+        drive.tankDrive(pair.left, pair.right);
     }
     
     /**
