@@ -52,8 +52,11 @@ public class RobotTemplate extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        LRDrive.Pair pair = lrdrive.straightDrive(leftStick.getY(), rightStick.getY(), gyro.getAngle(), 0);
-        drive.tankDrive(pair.left, pair.right);
+        LRDrive.Pair pair = lrdrive.straightDrive(leftStick.getY(), rightStick.getY(), gyro.getAngle(), 2, rightStick.getRawButton(2));
+        if (rightStick.getRawButton(2)) {
+            gyro.reset();
+        }
+//        drive.tankDrive(pair.left, pair.right);
     }
     
     /**
