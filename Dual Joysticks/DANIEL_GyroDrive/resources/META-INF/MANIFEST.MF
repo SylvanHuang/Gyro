@@ -1,6 +1,0 @@
-MIDlet-Name: DANIEL_GyroDrive
-MIDlet-Version: 1.0.0
-MIDlet-Vendor: FIRST
-MIDlet-1: GyroDrive, , edu.wpi.first.wpilibj.templates.GyroDrive
-MicroEdition-Profile: IMP-1.0
-MicroEdition-Configuration: CLDC-1.1
