@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 /**
@@ -29,6 +30,8 @@ public class RobotTemplate extends IterativeRobot {
      * used for any initialization code.
      */
     DriverStationLCD lcd = DriverStationLCD.getInstance();
+    Joystick leftStick = new Joystick(1);
+    Joystick rightStick = new Joystick(2);
     RobotDrive drive = new RobotDrive(5, 4, 7, 8);
     double wheel = 0;
     double speedStick = 0;
@@ -62,30 +65,54 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void teleopPeriodic() {
         curDir = gyro.getAngle();
-        try {
-            wheel = -cypress.getAnalogIn(8);
-            speedStick = cypress.getAnalogIn(1);
-        } catch (DriverStationEnhancedIO.EnhancedIOException e) {}
-        wheel = Util.map(wheel, -3.3, 0, -1, 1);
-        if (wheel > 0) {
-            wheel = Util.map(wheel, 0, 1, 0.3, 1);
-        } else if (wheel < 0) {
-            wheel = Util.map(wheel, -1, 0, -1, -0.3);
+        
+//        Joystick Wheel and SpeedStick start
+        wheel = rightStick.getX();
+        if (wheel < 0) {
+            wheel = Util.map(wheel, -1, 0, -1, -0.1);
+        } else if (wheel > 0) {
+            wheel = Util.map(wheel, 0, 1, 0.1, 1);
         }
-        wheel = Util.deadZone(wheel, -0.32, 0.32, 0);
-        speedStick = Util.map(speedStick, 0, 3.3, -1, 1);
+        wheel = Util.deadZone(wheel, -0.15, 0.15, 0);
+
+        speedStick = leftStick.getY();
+        if (speedStick < 0) {
+            speedStick = Util.map(speedStick, -1, 0, -1, -0.1);
+        } else if (wheel > 0) {
+            speedStick = Util.map(speedStick , 0, 1, 0.1, 1);
+        }
+        speedStick = Util.deadZone(speedStick, -0.15, 0.15, 0);
+        
+//        Joystick Wheel and SpeedStick end
+        
+        
+//        Wheel and Stick start
+//        try {
+//            wheel = -cypress.getAnalogIn(8);
+//            speedStick = cypress.getAnalogIn(1);
+//        } catch (DriverStationEnhancedIO.EnhancedIOException e) {}
+//        wheel = Util.map(wheel, -3.3, 0, -1, 1);
+//        if (wheel > 0) {
+//            wheel = Util.map(wheel, 0, 1, 0.3, 1);
+//        } else if (wheel < 0) {
+//            wheel = Util.map(wheel, -1, 0, -1, -0.3);
+//        }
+//        wheel = Util.deadZone(wheel, -0.32, 0.32, 0);
+//        speedStick = Util.map(speedStick, 0, 3.3, -1, 1);
 //        if (speedStick < 0) {
 //            speedStick = Util.map(speedStick, -1, -0.18, -1, 0);
 //        } else if (speedStick > 0) {
 //            speedStick = Util.map(speedStick, 0.3, 1, 0, 1);
 //        }
         
+//        Wheel and Stick end
+        
         
         
         
 //        Gyro Start
         difference = 0 - wheel;
-        speed = speedStick / 180;
+        speed = speedStick;
         goalDir = curDir + speed;
         rightDrive = speed + difference;
         leftDrive = speed - difference;
@@ -96,7 +123,7 @@ public class RobotTemplate extends IterativeRobot {
                 
         
         
-        System.out.println(wheel + "   " + difference);
+        System.out.println("diff..:" + difference + "   " + "speed:" + speed + "   drive:" + leftDrive + "   " + rightDrive);
         
         
 //        drive.arcadeDrive(speedStick,  wheel);
