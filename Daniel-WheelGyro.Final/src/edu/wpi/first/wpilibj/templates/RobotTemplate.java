@@ -52,7 +52,7 @@ public class RobotTemplate extends IterativeRobot {
     public void teleopPeriodic() {
         wheelAngle = Wheel.getX();
         speed = speedStick.getY();
-        Wheel_Class.Pair pair = wheelClass.straightDrive(wheelAngle, speed, leftDrive, rightDrive, gyro.getAngle());
+        Wheel_Class.Pair pair = wheelClass.straightDrive(wheelAngle, speed, leftDrive, rightDrive, gyro.getAngle(), gyro.getAngle());
         
         System.out.println(pair.one+ "  "+ pair.two);
         drive.tankDrive(pair.one, pair.two);
