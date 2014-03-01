@@ -22,23 +22,33 @@ public class Wheel_Class {
         }
     }
     
-    public Pair straightDrive(double wheel, double speedStick, double leftDrive, double rightDrive, double curDir, double goalDir){
-        goalDir = goalDir + (wheel / 90);
-        curDir = Util.deadZone(curDir, -0.6, 0.6, 0);
-        wheel = Util.deadZone(wheel, -0.1, 0.1, 0);
-        speedStick = Util.deadZone(speedStick, -0.1, 0.1, 0);
+    /**
+     *
+     * @param X
+     */
+    public static double goalDir(double wheel, double goalDir) {
+        goalDir = goalDir + wheel;
+               return goalDir;
+    }
+    
+    public Pair straightDrive(double wheel, double speedStick, double curDir){
         
+        curDir = Util.deadZone(curDir, -0.6, 0.6, 0);
+        wheel = Util.deadZone(wheel, -0.1, 0.1, 0);        
+        goalDir(wheel, curDir);
+        speedStick = Util.deadZone(speedStick, -0.1, 0.1, 0);
+         
 //        Gyro start
         
         double speed = speedStick;   
-        double gyroDif = goalDir - curDir;
-        
-        rightDrive = speed + (wheel + gyroDif);
-        leftDrive = speed - (wheel + gyroDif);
+//        double gyroDif = goalDir - curDir;
+//        gyroDif = Util.deadZone(gyroDif, -0.1, 0.1, 0);
+        System.out.println("   " + curDir + "   ");
+        double rightDrive = speed + (wheel);
+        double leftDrive = speed - (wheel);
                 
 //        Gyro end
         
-        //System.out.println(curDir + "   "+ goalDir + "   " + gyroDif + "  " + rightDrive + "  " + leftDrive);
         return new Pair(leftDrive, rightDrive);
     }
 }    

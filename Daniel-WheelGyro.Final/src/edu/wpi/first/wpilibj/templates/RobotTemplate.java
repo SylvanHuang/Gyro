@@ -25,10 +25,9 @@ public class RobotTemplate extends IterativeRobot {
     Joystick Wheel = new Joystick(2);
     RobotDrive drive = new RobotDrive(8, 4, 1, 3);
     Gyro gyro = new Gyro(1);
-    double leftDrive = 0;
-    double rightDrive = 0;
     double speed = 0;
     double wheelAngle = 0;
+    double goalDir = 0;
     Wheel_Class wheelClass = new Wheel_Class();
     /**
      * This function is run when the robot is first started up and should be
@@ -36,7 +35,7 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void robotInit() {
         gyro.reset();
-
+        goalDir = gyro.getAngle();
     }
 
     /**
@@ -52,11 +51,10 @@ public class RobotTemplate extends IterativeRobot {
     public void teleopPeriodic() {
         wheelAngle = Wheel.getX();
         speed = speedStick.getY();
-        Wheel_Class.Pair pair = wheelClass.straightDrive(wheelAngle, speed, leftDrive, rightDrive, gyro.getAngle(), gyro.getAngle());
+        Wheel_Class.Pair pair = wheelClass.straightDrive(wheelAngle, speed, gyro.getAngle());
         
-        System.out.println(pair.one+ "  "+ pair.two);
-        drive.tankDrive(pair.one, pair.two);
-//        drive.tankDrive(speedStick.getY(), Wheel.getY());
+//        System.out.println(pair.one+ "  "+ pair.two);
+//        drive.tankDrive(pair.one, pair.two);      
     }
     
     /**
